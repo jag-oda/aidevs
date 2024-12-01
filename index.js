@@ -20,8 +20,7 @@ const openai = new OpenAI({
 async function getLLMResponse(instruction) {
     // Prompt z mapą i instrukcjami
     const prompt = `
-Masz przed sobą mapę 4x4, na której piloci rozpoczynają swoje loty zawsze od punktu startowego, znajdującego się w lewym górnym rogu (0,0).
-Każdy element na mapie ma swoją specyficzną nazwę. Oto jak wygląda mapa:
+Masz przed sobą mapę 4x4, na której piloci rozpoczynają swoje loty zawsze od punktu startowego, znajdującego się w lewym górnym rogu (0,0). Każdy element na mapie ma swoją specyficzną nazwę. Oto jak wygląda mapa:
 
 Start   | Trawa   | Drzewo  | Dom
 Łąka    | Młyn    | Łąka    | Łąka
@@ -40,7 +39,16 @@ Zawsze zaczynasz od punktu START, czyli (0,0). Każda instrukcja zawiera listę 
 Instrukcja:
 ${instruction}
 
-Twoje zadanie to określenie, w jakim miejscu na mapie znajduje się dron po wykonaniu ruchów opisanych w instrukcji. Opisz to miejsce w maksymalnie dwóch słowach.
+Ważne zasady:
+1. Jeśli mówi się, że "lecimy na sam dół mapy", oznacza to, że należy przejść do ostatniego wiersza (ruch w dół o 3 pola).
+2. Jeśli mówi się, że "lecisz w prawo", oznacza to ruch w prawo o 1 pole, chyba że jest inaczej określone.
+3. W "korekta o jedno pole do góry" chodzi o ruch w górę o 1 pole.
+4. Twoje zadanie to zrozumienie, ile pól w określoną stronę dron powinien polecieć, na przykład:
+   - "Poleciałem na sam dół mapy" → ruch 3 pola w dół.
+   - "Potem ile tylko możemy polecimy w prawo" → tak długo jak to możliwe, czyli do ostatniej kolumny.
+   - "Teraz mała korekta o jedno pole do góry" → przesunięcie o jedno pole do góry.
+
+Po wykonaniu instrukcji wskaż, gdzie znajduje się dron. Opisz to miejsce w maksymalnie dwóch słowach.
 
 
  `;
