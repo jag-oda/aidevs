@@ -1,16 +1,4 @@
 {
-<<<<<<< HEAD
-  "name": "aidevs3",
-  "version": "1.0.0",
-  "main": "index.js",
-  "scripts": {
-    "start": "node index.js"
-  },
-  "dependencies": {
-    "express": "^4.18.0",
-    "dotenv": "^16.0.0",
-    "openai": "^3.0.0"
-=======
   "name": "drone-api",
   "version": "1.0.0",
   "description": "",
@@ -23,6 +11,5 @@
   "license": "ISC",
   "dependencies": {
     "express": "^4.21.1"
->>>>>>> dd79bd1 (Initial commit)
   }
 }
