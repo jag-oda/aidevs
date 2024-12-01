@@ -20,24 +20,27 @@ const openai = new OpenAI({
 async function getLLMResponse(instruction) {
     // Prompt z mapą i instrukcjami
     const prompt = `
-Masz przed sobą mapę 4x4, na której piloci rozpoczynają swoje loty zawsze od punktu startowego, znajdującego się w lewym górnym rogu (0,0). Każdy element na mapie ma swoją specyficzną nazwę. Oto jak wygląda mapa:
+Masz przed sobą mapę 4x4, na której piloci rozpoczynają swoje loty zawsze od punktu startowego, znajdującego się w lewym górnym rogu (0,0).
+Każdy element na mapie ma swoją specyficzną nazwę. Oto jak wygląda mapa:
 
 Start   | Trawa   | Drzewo  | Dom
-Trawa   | Młyn    | Trawa   | Trawa
-Trawa   | Trawa   | Kamienie| Dwa drzewa
+Łąka    | Młyn    | Łąka    | Łąka
+Łąka    | Łąka    | Kamienie| Dwa drzewa
 Skały   | Skały   | Auto    | Jaskinia
 
-Każde pole na mapie oznacza różne elementy, jak "Trawa", "Trawa", "Drzewo", "Dom" i inne. Na przykład, pole w lewym górnym rogu to "Start", gdzie zaczyna się lot. Możesz wyobrazić sobie mapę jako siatkę 4x4, w której każdy wiersz i każda kolumna ma określoną nazwę:
+Każde pole na mapie oznacza różne elementy, jak "Trawa", "Łąka", "Drzewo", "Dom" i inne. Na przykład, pole w lewym górnym rogu to "Start", gdzie zaczyna się lot. Możesz wyobrazić sobie mapę jako siatkę 4x4, w której każdy wiersz i każda kolumna ma określoną nazwę:
 
 1. Wiersz 1: Start, Trawa, Drzewo, Dom
-2. Wiersz 2: Trawa, Młyn, Trawa, Trawa
-3. Wiersz 3: Trawa, Trawa, Kamienie, Dwa drzewa
+2. Wiersz 2: Łąka, Młyn, Łąka, Łąka
+3. Wiersz 3: Łąka, Łąka, Kamienie, Dwa drzewa
 4. Wiersz 4: Skały, Skały, Auto, Jaskinia
+
+Zawsze zaczynasz od punktu START, czyli (0,0). Każda instrukcja zawiera listę ruchów, które wykonujesz zaczynając od punktu START, a następnie przesuwasz się o odpowiednią liczbę pól w lewo, prawo, w górę lub w dół. Pamiętaj, że po każdym ruchu twój aktualny punkt jest kolejnym "startem" dla następnego ruchu, a kolejne pole liczy się już od miejsca, w którym jesteś po poprzednich ruchach.
 
 Instrukcja:
 ${instruction}
 
-Każda instrukcja zaczyna się od miejsca START, a potem wykonujesz serię ruchów. Twoje zadanie to określenie, gdzie znajduje się dron po wykonaniu tych ruchów. Opisz to miejsce w maksymalnie dwóch słowach.
+Twoje zadanie to określenie, w jakim miejscu na mapie znajduje się dron po wykonaniu ruchów opisanych w instrukcji. Zwróć tylko nazwę pola, na którym się znajdujesz.
 
 
  `;
