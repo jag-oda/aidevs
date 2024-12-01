@@ -20,28 +20,37 @@ const openai = new OpenAI({
 async function getLLMResponse(instruction) {
     // Prompt z mapą i instrukcjami
     const prompt = `
-     Masz przed sobą mapę 4x4, na której piloci rozpoczynają swoje loty zawsze od punktu startowego (0,0). Każdy kolejny ruch odbywa się w sposób ciągły, tzn. po każdym ruchu aktualna pozycja zmienia się w zależności od poprzednich instrukcji. Oto jak wygląda mapa:
+    Twoim zadaniem jest zrozumienie mapy i odpowiedzenie na pytania na podstawie opisanego ruchu drona na mapie 4x4. Mapa wygląda następująco:
 
-    1. Wiersz 1: Start, łąka, Drzewo, Dom
-    2. Wiersz 2: Łąka, Młyn, Łąka, Łąka
-    3. Wiersz 3: Łąka, Łąka, Kamienie, Dwa drzewa
-    4. Wiersz 4: Skały, Skały, Auto, Jaskinia
+Start, łąka, drzewo, dom
+Łąka, młyn, łąka, łąka
+Łąka, łąka, kamienie, dwa drzewa
+Skały, skały, auto, jaskinia
 
-    Każdy ruch na mapie odbywa się w jednym z czterech kierunków:
-    - W prawo (np. Trawa -> Drzewo)
-    - W dół (np. Trawa -> Łąka)
+Piloci zawsze zaczynają lot od punktu (0,0) (oznaczonego jako "Start") i poruszają się na mapie w sposób ciągły. Kiedy otrzymasz instrukcję, nie zaczynaj ruchu od punktu (0,0) za każdym razem, ale traktuj każdy kolejny ruch jako sekwencyjny od ostatniej pozycji. Na przykład:
 
-    Ruchy mogą być złożone, co oznacza, że każde kolejne pole to kontynuacja poprzedniego ruchu. Na przykład, jeśli instrukcja mówi "Poleciałem jedno pole w prawo, potem dwa w dół", oznacza to:
-    1. Rozpoczynasz w punkcie "Start" (0,0).
-    2. Pierwszy ruch to pole w prawo: "Start" -> "łąka".
-    3. Drugi ruch to jedno pole w dół: "łąka" -> "młyn".
-    4. Trzeci ruch to kolejne jedno pole w dół: "młyn" -> "łąka".
+- Jeśli otrzymasz instrukcję "poleciałem jedno pole w prawo, potem dwa w dół", zacznij od pozycji (0,0), potem wykonaj ruch w prawo do (0,1), a następnie wykonaj dwa ruchy w dół, czyli: (0,1) -> (1,1) -> (2,1). Na tej pozycji, wynikowym obszarem będzie "łąka", a nie "młyn".
 
-    Instrukcja:
-    ${instruction}
+Twoim zadaniem jest podanie, na jakim polu znajduje się dron po wykonaniu wszystkich ruchów.
 
-    Twoje zadanie to określenie, w jakim miejscu na mapie znajduje się dron po wykonaniu ruchów opisanych w instrukcji. Opisz to miejsce w maksymalnie dwóch słowach, uwzględniając aktualną pozycję na mapie.
-    `;
+Pamiętaj, że mapa ma następujący układ:
+
+Row 0: ["Start", "łąka", "drzewo", "dom"]
+Row 1: ["Łąka", "młyn", "łąka", "łąka"]
+Row 2: ["Łąka", "łąka", "kamienie", "dwa drzewa"]
+Row 3: ["Skały", "skały", "auto", "jaskinia"]
+
+Podaj tylko nazwę obszaru, na którym znajduje się dron po wykonaniu wszystkich ruchów.
+
+Poniżej znajdują się przykłady:
+
+Instrukcja: "Poleciałem jedno pole w prawo, potem dwa w dół"
+Odpowiedź: "łąka"
+
+Instrukcja: "Poleciałem jedno pole w lewo, potem jedno w górę"
+Odpowiedź: "trawa"
+
+ `;
   
     try {
       // Wywołanie OpenAI API w celu uzyskania odpowiedzi na podstawie mapy
