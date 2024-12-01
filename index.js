@@ -22,7 +22,7 @@ async function getLLMResponse(instruction) {
     const prompt = `
      Masz przed sobą mapę 4x4, na której piloci rozpoczynają swoje loty zawsze od punktu startowego (0,0). Każdy kolejny ruch odbywa się w sposób ciągły, tzn. po każdym ruchu aktualna pozycja zmienia się w zależności od poprzednich instrukcji. Oto jak wygląda mapa:
 
-    1. Wiersz 1: Start, Trawa, Drzewo, Dom
+    1. Wiersz 1: Start, łąka, Drzewo, Dom
     2. Wiersz 2: Łąka, Młyn, Łąka, Łąka
     3. Wiersz 3: Łąka, Łąka, Kamienie, Dwa drzewa
     4. Wiersz 4: Skały, Skały, Auto, Jaskinia
@@ -33,9 +33,9 @@ async function getLLMResponse(instruction) {
 
     Ruchy mogą być złożone, co oznacza, że każde kolejne pole to kontynuacja poprzedniego ruchu. Na przykład, jeśli instrukcja mówi "Poleciałem jedno pole w prawo, potem dwa w dół", oznacza to:
     1. Rozpoczynasz w punkcie "Start" (0,0).
-    2. Pierwszy ruch to pole w prawo: "Start" -> "Trawa".
-    3. Drugi ruch to jedno pole w dół: "Trawa" -> "Łąka".
-    4. Trzeci ruch to kolejne jedno pole w dół: "Łąka" -> "Młyn".
+    2. Pierwszy ruch to pole w prawo: "Start" -> "łąka".
+    3. Drugi ruch to jedno pole w dół: "łąka" -> "młyn".
+    4. Trzeci ruch to kolejne jedno pole w dół: "młyn" -> "łąka".
 
     Instrukcja:
     ${instruction}
