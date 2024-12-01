@@ -20,34 +20,30 @@ const openai = new OpenAI({
 async function getLLMResponse(instruction) {
     // Prompt z mapą i instrukcjami
     const prompt = `
-    Twoim zadaniem jest zrozumienie mapy i odpowiedzenie na pytania na podstawie opisanego ruchu drona na mapie 4x4. Mapa wygląda następująco:
-
-Start, łąka, drzewo, dom
-Łąka, młyn, łąka, łąka
-Łąka, łąka, kamienie, dwa drzewa
-Skały, skały, auto, jaskinia
-
-Piloci zawsze zaczynają lot od punktu (0,0) (oznaczonego jako "Start") i poruszają się na mapie w sposób ciągły. Kiedy otrzymasz instrukcję, nie zaczynaj ruchu od punktu (0,0) za każdym razem, ale traktuj każdy kolejny ruch jako sekwencyjny od ostatniej pozycji. Na przykład:
-
-- Jeśli otrzymasz instrukcję "poleciałem jedno pole w prawo, potem dwa w dół", zacznij od pozycji (0,0), potem wykonaj ruch w prawo do (0,1), a następnie wykonaj dwa ruchy w dół, czyli: (0,1) -> (1,1) -> (2,1). Na tej pozycji, wynikowym obszarem będzie "łąka", a nie "młyn".
-
-Twoim zadaniem jest podanie, na jakim polu znajduje się dron po wykonaniu wszystkich ruchów.
-
-Pamiętaj, że mapa ma następujący układ:
+Mapa ma wymiary 4x4. Piloci zawsze zaczynają od punktu (0,0), który oznaczone jest jako "Start". Następnie wykonują ciągłe ruchy po mapie. Oto jak wygląda mapa:
 
 Row 0: ["Start", "łąka", "drzewo", "dom"]
-Row 1: ["Łąka", "młyn", "łąka", "łąka"]
-Row 2: ["Łąka", "łąka", "kamienie", "dwa drzewa"]
-Row 3: ["Skały", "skały", "auto", "jaskinia"]
+Row 1: ["łąka", "młyn", "łąka", "łąka"]
+Row 2: ["łąka", "łąka", "kamienie", "dwa drzewa"]
+Row 3: ["skały", "skały", "auto", "jaskinia"]
 
-Podaj tylko nazwę obszaru, na którym znajduje się dron po wykonaniu wszystkich ruchów.
+Po otrzymaniu instrukcji, poruszaj się po mapie w następujący sposób:
+1. Rozpocznij od bieżącej pozycji, którą należy śledzić.
+2. Wykonaj każdy ruch zgodnie z instrukcją, pamiętając, że zaczynasz od punktu, w którym skończyłeś poprzedni ruch.
+3. Po zakończeniu ruchów, odpowiedz **tylko nazwą pola**, na którym znajduje się dron. Odpowiedź nie powinna zawierać żadnych dodatkowych informacji, opisów czy słów — tylko jedno pole w jednym słowie, np. "łąka".
 
-Poniżej znajdują się przykłady:
+**Odpowiedź powinna być maksymalnie dwoma słowami, bez dodatkowych szczegółów.**
 
+Przykład:
 Instrukcja: "Poleciałem jedno pole w prawo, potem dwa w dół"
-Odpowiedź: "łąka"
+- Zacznij w punkcie (0,0), przejdź do (0,1), potem do (1,1) i na koniec do (2,1).
+- Wynik: "łąka"
 
-Zwróć tylko odpowiedź. 
+Przykład 2:
+Instrukcja: "Poleciałem jedno pole w lewo, potem jedno w górę"
+- Zacznij w punkcie (0,0), przejdź do (0,-1), a potem w górę.
+- Wynik: "trawa"
+
 
  `;
   
