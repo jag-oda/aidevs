@@ -20,30 +20,25 @@ const openai = new OpenAI({
 async function getLLMResponse(instruction) {
     // Prompt z mapą i instrukcjami
     const prompt = `
-Mapa ma wymiary 4x4. Piloci zawsze zaczynają od punktu (0,0), który oznaczone jest jako "Start". Następnie wykonują ciągłe ruchy po mapie. Oto jak wygląda mapa:
-
-Row 0: ["Start", "łąka", "drzewo", "dom"]
-Row 1: ["łąka", "młyn", "łąka", "łąka"]
-Row 2: ["łąka", "łąka", "kamienie", "dwa drzewa"]
-Row 3: ["skały", "skały", "auto", "jaskinia"]
-
-Po otrzymaniu instrukcji, poruszaj się po mapie w następujący sposób:
-1. Rozpocznij od bieżącej pozycji, którą należy śledzić.
-2. Wykonaj każdy ruch zgodnie z instrukcją, pamiętając, że zaczynasz od punktu, w którym skończyłeś poprzedni ruch.
-3. Po zakończeniu ruchów, odpowiedz **tylko nazwą pola**, na którym znajduje się dron. Odpowiedź nie powinna zawierać żadnych dodatkowych informacji, opisów czy słów — tylko jedno pole w jednym słowie, np. "łąka".
-
-**Odpowiedź powinna być maksymalnie dwoma słowami, bez dodatkowych szczegółów.**
-
-Przykład:
-Instrukcja: "Poleciałem jedno pole w prawo, potem dwa w dół"
-- Zacznij w punkcie (0,0), przejdź do (0,1), potem do (1,1) i na koniec do (2,1).
-- Wynik: "łąka"
-
-Przykład 2:
-Instrukcja: "Poleciałem jedno pole w lewo, potem jedno w górę"
-- Zacznij w punkcie (0,0), przejdź do (0,-1), a potem w górę.
-- Wynik: "trawa"
-
+Masz przed sobą mapę 4x4, na której piloci rozpoczynają swoje loty zawsze od punktu startowego, znajdującego się w lewym górnym rogu (0,0).
+      Każdy element na mapie ma swoją specyficzną nazwę. Oto jak wygląda mapa:
+      
+      Start   | Trawa   | Drzewo  | Dom
+      Łąka    | Młyn    | Łąka    | Łąka
+      Łąka    | Łąka    | Kamienie| Dwa drzewa
+      Skały   | Skały   | Auto    | Jaskinia
+  
+      Każde pole na mapie oznacza różne elementy, jak "Trawa", "Łąka", "Drzewo", "Dom" i inne. Na przykład, pole w lewym górnym rogu to "Start", gdzie zaczyna się lot. Możesz wyobrazić sobie mapę jako siatkę 4x4, w której każdy wiersz i każda kolumna ma określoną nazwę:
+  
+      1. Wiersz 1: Start, Trawa, Drzewo, Dom
+      2. Wiersz 2: Łąka, Młyn, Łąka, Łąka
+      3. Wiersz 3: Łąka, Łąka, Kamienie, Dwa drzewa
+      4. Wiersz 4: Skały, Skały, Auto, Jaskinia
+  
+      Instrukcja:
+      ${instruction}
+  
+      Twoje zadanie to określenie, w jakim miejscu na mapie znajduje się dron po wykonaniu ruchów opisanych w instrukcji. Opisz to miejsce w maksymalnie dwóch słowach.
 
  `;
   
