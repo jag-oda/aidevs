@@ -47,6 +47,8 @@ Poniżej znajdują się przykłady:
 Instrukcja: "Poleciałem jedno pole w prawo, potem dwa w dół"
 Odpowiedź: "łąka"
 
+Zwróć tylko odpowiedź. 
+
  `;
   
     try {
