@@ -17,34 +17,44 @@ const openai = new OpenAI({
 
 
 // Funkcja do zapytania LLM
-async function getLLMResponse(instructions) {
-  const prompt = `Zrozum polecenie i opisz miejsce docelowe: "${instructions}"`;
-
-  try {
-    const completion = await openai.chat.completions.create({
-      model: 'gpt-4', // Wybierz odpowiedni model OpenAI
-      messages: [
-        {
-          role: 'system',
-          content: 'Jesteś asystentem pomagającym w rozumieniu instrukcji lokalizacyjnych.',
-        },
-        {
-          role: 'user',
-          content: prompt,
-        },
-      ],
-    });
-
-    console.log('response od openAI');
-    console.log(completion.choices[0])
-
-    // Zwracamy odpowiedź LLM
-    return completion.choices[0].message.content.trim();
-  } catch (error) {
-    console.error("Błąd podczas zapytania do OpenAI:", error);
-    throw new Error('Błąd podczas przetwarzania zapytania');
+async function getLLMResponse(instruction) {
+    // Prompt z mapą i instrukcjami
+    const prompt = `
+      Masz przed sobą mapę 4x4, na której piloci rozpoczynają swoje loty zawsze od punktu startowego, znajdującego się w lewym górnym rogu (0,0).
+      Każdy element na mapie ma swoją specyficzną nazwę. Oto jak wygląda mapa:
+      
+      Start   | Trawa   | Drzewo  | Dom
+      Łąka    | Młyn    | Łąka    | Łąka
+      Łąka    | Łąka    | Kamienie| Dwa drzewa
+      Skały   | Skały   | Auto    | Jaskinia
+  
+      Każde pole na mapie oznacza różne elementy, jak "Trawa", "Łąka", "Drzewo", "Dom" i inne. Na przykład, pole w lewym górnym rogu to "Start", gdzie zaczyna się lot. Możesz wyobrazić sobie mapę jako siatkę 4x4, w której każdy wiersz i każda kolumna ma określoną nazwę:
+  
+      1. Wiersz 1: Start, Trawa, Drzewo, Dom
+      2. Wiersz 2: Łąka, Młyn, Łąka, Łąka
+      3. Wiersz 3: Łąka, Łąka, Kamienie, Dwa drzewa
+      4. Wiersz 4: Skały, Skały, Auto, Jaskinia
+  
+      Instrukcja:
+      ${instruction}
+  
+      Twoje zadanie to określenie, w jakim miejscu na mapie znajduje się dron po wykonaniu ruchów opisanych w instrukcji. Opisz to miejsce w maksymalnie dwóch słowach.
+    `;
+  
+    try {
+      // Wywołanie OpenAI API w celu uzyskania odpowiedzi na podstawie mapy
+      const response = await openai.chat.completions.create({
+        model: "gpt-4", // Wybór modelu GPT-3.5
+        messages: [{ role: "system", content: prompt }],
+      });
+  
+      // Oczekiwana odpowiedź
+      return response.choices[0].message.content.trim();
+    } catch (error) {
+      console.error("Error while fetching the response from OpenAI:", error);
+      throw new Error("Błąd podczas przetwarzania zapytania");
+    }
   }
-}
 
 // Endpoint POST, który przyjmuje instrukcje i wysyła zapytanie do LLM
 app.post('/instruction', async (req, res) => {
