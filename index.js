@@ -54,7 +54,7 @@ async function getLLMResponse(instructions) {
 // Endpoint POST, który przyjmuje instrukcje i wysyła zapytanie do LLM
 app.post('/instruction', async (req, res) => {
   const instructions = req.body.instruction;
-
+    console.log('instruction', instructions)
   if (!instructions) {
     return res.status(400).json({ error: "Brak instrukcji w zapytaniu" });
   }
