@@ -23,32 +23,21 @@ async function getLLMResponse(instruction) {
 Masz przed sobą mapę 4x4, na której piloci rozpoczynają swoje loty zawsze od punktu startowego, znajdującego się w lewym górnym rogu (0,0). Każdy element na mapie ma swoją specyficzną nazwę. Oto jak wygląda mapa:
 
 Start   | Trawa   | Drzewo  | Dom
-Łąka    | Młyn    | Łąka    | Łąka
-Łąka    | Łąka    | Kamienie| Dwa drzewa
+Trawa   | Młyn    | Trawa   | Trawa
+Trawa   | Trawa   | Kamienie| Dwa drzewa
 Skały   | Skały   | Auto    | Jaskinia
 
-Każde pole na mapie oznacza różne elementy, jak "Trawa", "Łąka", "Drzewo", "Dom" i inne. Na przykład, pole w lewym górnym rogu to "Start", gdzie zaczyna się lot. Możesz wyobrazić sobie mapę jako siatkę 4x4, w której każdy wiersz i każda kolumna ma określoną nazwę:
+Każde pole na mapie oznacza różne elementy, jak "Trawa", "Trawa", "Drzewo", "Dom" i inne. Na przykład, pole w lewym górnym rogu to "Start", gdzie zaczyna się lot. Możesz wyobrazić sobie mapę jako siatkę 4x4, w której każdy wiersz i każda kolumna ma określoną nazwę:
 
 1. Wiersz 1: Start, Trawa, Drzewo, Dom
-2. Wiersz 2: Łąka, Młyn, Łąka, Łąka
-3. Wiersz 3: Łąka, Łąka, Kamienie, Dwa drzewa
+2. Wiersz 2: Trawa, Młyn, Trawa, Trawa
+3. Wiersz 3: Trawa, Trawa, Kamienie, Dwa drzewa
 4. Wiersz 4: Skały, Skały, Auto, Jaskinia
-
-Zawsze zaczynasz od punktu START, czyli (0,0). Każda instrukcja zawiera listę ruchów, które wykonujesz zaczynając od punktu START, a następnie przesuwasz się o odpowiednią liczbę pól w lewo, prawo, w górę lub w dół. Pamiętaj, że po każdym ruchu twój aktualny punkt jest kolejnym "startem" dla następnego ruchu, a kolejne pole liczy się już od miejsca, w którym jesteś po poprzednich ruchach.
 
 Instrukcja:
 ${instruction}
 
-Ważne zasady:
-1. Jeśli mówi się, że "lecimy na sam dół mapy", oznacza to, że należy przejść do ostatniego wiersza (ruch w dół o 3 pola).
-2. Jeśli mówi się, że "lecisz w prawo", oznacza to ruch w prawo o 1 pole, chyba że jest inaczej określone.
-3. W "korekta o jedno pole do góry" chodzi o ruch w górę o 1 pole.
-4. Twoje zadanie to zrozumienie, ile pól w określoną stronę dron powinien polecieć, na przykład:
-   - "Poleciałem na sam dół mapy" → ruch 3 pola w dół.
-   - "Potem ile tylko możemy polecimy w prawo" → tak długo jak to możliwe, czyli do ostatniej kolumny.
-   - "Teraz mała korekta o jedno pole do góry" → przesunięcie o jedno pole do góry.
-
-Po wykonaniu instrukcji wskaż, gdzie znajduje się dron. Opisz to miejsce w maksymalnie dwóch słowach.
+Każda instrukcja zaczyna się od miejsca START, a potem wykonujesz serię ruchów. Twoje zadanie to określenie, gdzie znajduje się dron po wykonaniu tych ruchów. Opisz to miejsce w maksymalnie dwóch słowach.
 
 
  `;
