@@ -17,7 +17,7 @@ try {
   console.error("Nie udało się wczytać pliku .key: ", err);
   process.exit(1); // Zakończenie procesu, jeśli nie uda się wczytać klucza
 }
-const openai = new OpenAIApi({
+const openai = new OpenAI({
     apiKey: openaiApiKey,
   });
 
