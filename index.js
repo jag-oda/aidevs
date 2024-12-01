@@ -21,24 +21,27 @@ async function getLLMResponse(instruction) {
     // Prompt z mapą i instrukcjami
     const prompt = `
 Masz przed sobą mapę 4x4, na której piloci rozpoczynają swoje loty zawsze od punktu startowego, znajdującego się w lewym górnym rogu (0,0).
-      Każdy element na mapie ma swoją specyficzną nazwę. Oto jak wygląda mapa:
-      
-      Start   | Trawa   | Drzewo  | Dom
-      Łąka    | Młyn    | Łąka    | Łąka
-      Łąka    | Łąka    | Kamienie| Dwa drzewa
-      Skały   | Skały   | Auto    | Jaskinia
-  
-      Każde pole na mapie oznacza różne elementy, jak "Trawa", "Łąka", "Drzewo", "Dom" i inne. Na przykład, pole w lewym górnym rogu to "Start", gdzie zaczyna się lot. Możesz wyobrazić sobie mapę jako siatkę 4x4, w której każdy wiersz i każda kolumna ma określoną nazwę:
-  
-      1. Wiersz 1: Start, Trawa, Drzewo, Dom
-      2. Wiersz 2: Łąka, Młyn, Łąka, Łąka
-      3. Wiersz 3: Łąka, Łąka, Kamienie, Dwa drzewa
-      4. Wiersz 4: Skały, Skały, Auto, Jaskinia
-  
-      Instrukcja:
-      ${instruction}
-  
-      Twoje zadanie to określenie, w jakim miejscu na mapie znajduje się dron po wykonaniu ruchów opisanych w instrukcji. Opisz to miejsce w maksymalnie dwóch słowach.
+Każdy element na mapie ma swoją specyficzną nazwę. Oto jak wygląda mapa:
+
+Start   | Trawa   | Drzewo  | Dom
+Łąka    | Młyn    | Łąka    | Łąka
+Łąka    | Łąka    | Kamienie| Dwa drzewa
+Skały   | Skały   | Auto    | Jaskinia
+
+Każde pole na mapie oznacza różne elementy, jak "Trawa", "Łąka", "Drzewo", "Dom" i inne. Na przykład, pole w lewym górnym rogu to "Start", gdzie zaczyna się lot. Możesz wyobrazić sobie mapę jako siatkę 4x4, w której każdy wiersz i każda kolumna ma określoną nazwę:
+
+1. Wiersz 1: Start, Trawa, Drzewo, Dom
+2. Wiersz 2: Łąka, Młyn, Łąka, Łąka
+3. Wiersz 3: Łąka, Łąka, Kamienie, Dwa drzewa
+4. Wiersz 4: Skały, Skały, Auto, Jaskinia
+
+Zawsze zaczynasz od punktu START, czyli (0,0). Każda instrukcja zawiera listę ruchów, które wykonujesz zaczynając od punktu START, a następnie przesuwasz się o odpowiednią liczbę pól w lewo, prawo, w górę lub w dół. Pamiętaj, że po każdym ruchu twój aktualny punkt jest kolejnym "startem" dla następnego ruchu, a kolejne pole liczy się już od miejsca, w którym jesteś po poprzednich ruchach.
+
+Instrukcja:
+${instruction}
+
+Twoje zadanie to określenie, w jakim miejscu na mapie znajduje się dron po wykonaniu ruchów opisanych w instrukcji. Opisz to miejsce w maksymalnie dwóch słowach.
+
 
  `;
   
