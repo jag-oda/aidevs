@@ -22,7 +22,7 @@ async function getLLMResponse(instructions) {
 
   try {
     const completion = await openai.chat.completions.create({
-      model: 'gpt-3.5-turbo', // Wybierz odpowiedni model OpenAI
+      model: 'gpt-4', // Wybierz odpowiedni model OpenAI
       messages: [
         {
           role: 'system',
@@ -35,8 +35,11 @@ async function getLLMResponse(instructions) {
       ],
     });
 
+    console.log('response od openAI');
+    console.log(completion.choices[0])
+
     // Zwracamy odpowiedź LLM
-    return completion.data.choices[0].message.content.trim();
+    return completion.choices[0].message.content.trim();
   } catch (error) {
     console.error("Błąd podczas zapytania do OpenAI:", error);
     throw new Error('Błąd podczas przetwarzania zapytania');
