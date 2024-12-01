@@ -41,6 +41,7 @@ Instrukcja:
 ${instruction}
 
 Twoje zadanie to określenie, w jakim miejscu na mapie znajduje się dron po wykonaniu ruchów opisanych w instrukcji. Zwróć tylko nazwę pola, na którym się znajdujesz.
+Zwróć nazwę bez dodatkowego opisu i komentarza.
 
 
  `;
