@@ -1,4 +1,6 @@
 const express = require('express');
+const fs = require('fs');
+const bodyParser = require('body-parser');
 const { OpenAI } = require('openai');
 
 const app = express();
