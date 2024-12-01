@@ -11,6 +11,12 @@ app.post('/drone', (req, res) => {
   res.json({ description: 'skały' });
 });
 
+// Trasa główna
+app.get('/', (req, res) => {
+    res.send('Hello, World!'); // Możesz tu dodać coś bardziej zaawansowanego
+  });
+  
+
 app.listen(port, () => {
   console.log(`Server is running on port ${port}`);
 });
