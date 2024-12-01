@@ -53,6 +53,7 @@ Twoje zadanie to określenie, w jakim miejscu na mapie znajduje się dron po wyk
       });
   
       // Oczekiwana odpowiedź
+      console.log("ODPOWIEDŹ", response.choices[0].message.content.trim() )
       return response.choices[0].message.content.trim();
     } catch (error) {
       console.error("Error while fetching the response from OpenAI:", error);
