@@ -11,14 +11,11 @@ const port = process.env.PORT || 3000; // Heroku wymaga użycia dynamicznego por
 app.use(express.json());
 
 // Wczytanie klucza API z pliku .key w tym samym katalogu
-let openaiApiKey;
-
-try {
-  openaiApiKey = fs.readFileSync('.key', 'utf8').trim();
-} catch (err) {
-  console.error("Nie udało się wczytać pliku .key: ", err);
-  process.exit(1); // Zakończenie procesu, jeśli nie uda się wczytać klucza
+const openaiApiKey = process.env.OPENAI_API_KEY;
+if (!openaiApiKey) {
+  console.error('OpenAI API key not found!');
 }
+
 const openai = new OpenAI({
     apiKey: openaiApiKey,
   });
